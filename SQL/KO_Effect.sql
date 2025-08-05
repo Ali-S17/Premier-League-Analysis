@@ -1,1 +1,1 @@
-
+-- How does the time of the match affect teams in the big 6? Data from 19/20 to 24/25

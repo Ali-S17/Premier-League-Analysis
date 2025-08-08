@@ -27,4 +27,5 @@ FROM (
     GROUP BY AwayTeam
 ) AS Combined
 GROUP BY Team
-ORDER BY Total_Pts DESC;
+ORDER BY Total_Pts DESC
+LIMIT 4;

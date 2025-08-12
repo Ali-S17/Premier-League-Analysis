@@ -1,31 +1,24 @@
+-- Points needed to win the title over time / Date is the only thing to change
+
 SELECT Team, SUM(Points) AS Total_Pts
-FROM (
-    -- Home games
-    SELECT HomeTeam AS Team,
-           SUM(CASE 
-               WHEN FTHome > FTAway THEN 3
-               WHEN FTHome = FTAway THEN 1
-               ELSE 0
-           END) AS Points
-    FROM Matches
-    WHERE MatchDate BETWEEN '2002-08-17' AND '2003-05-11'
-      AND Division = 'E0'
-    GROUP BY HomeTeam
+FROM
+			 (SELECT HomeTeam AS Team,
+			   CASE WHEN FTHome > FTAway THEN 3
+						   WHEN FTHome = FTAway THEN 1
+						   ELSE 0 END AS Points
+				FROM Matches 
+				WHERE Division = 'E0'
+				AND MatchDate BETWEEN '2024-08-01' AND '2025-05-31'
+				
+UNION ALL
 
-    UNION ALL
-
-    -- Away games
-    SELECT AwayTeam AS Team,
-           SUM(CASE 
-               WHEN FTAway > FTHome THEN 3
-               WHEN FTAway = FTHome THEN 1
-               ELSE 0
-           END) AS Points
-    FROM Matches
-    WHERE MatchDate BETWEEN '2002-08-17' AND '2003-05-11'
-      AND Division = 'E0'
-    GROUP BY AwayTeam
-) AS Combined
+				SELECT AwayTeam AS Team,
+				CASE WHEN FTAway > FTHome THEN 3
+							WHEN FTAway = FTHome THEN 1
+							ELSE 0 END AS Points
+				FROM Matches
+				WHERE Division = 'E0'
+				AND MatchDate BETWEEN '2024-08-01' AND '2025-05-31')
 GROUP BY Team
 ORDER BY Total_Pts DESC
 LIMIT 4;
